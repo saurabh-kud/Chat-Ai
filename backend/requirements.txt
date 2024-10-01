@@ -1,0 +1,9 @@
+fastapi
+alembic
+psycopg2
+asyncpg
+SQLAlchemy
+fastapi-users
+fastapi-users-db-sqlalchemy
+uvicorn
+pydantic_settings
