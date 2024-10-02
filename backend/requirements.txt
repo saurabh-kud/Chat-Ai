@@ -7,3 +7,9 @@ fastapi-users
 fastapi-users-db-sqlalchemy
 uvicorn
 pydantic_settings
+PyPDF2
+python-docx
+llama_index
+transformers
+qdrant-client
+sentence_transformers
