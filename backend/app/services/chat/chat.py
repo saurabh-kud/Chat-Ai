@@ -16,7 +16,9 @@ def query_handling(chat_query: ChatQuery):
         context = "\n".join(
             [result.payload.get("content", "") for result in search_results]
         )
-        res = get_result_from_llms(user_query=user_query, context=context)
+        res = get_result_from_llms(
+            model_name=chat_query.model, user_query=user_query, context=context
+        )
         return res
     except Exception as e:
-        HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
