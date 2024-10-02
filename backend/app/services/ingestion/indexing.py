@@ -39,3 +39,9 @@ def insert_vectors(chunk: str, metadata: dict, chunk_id: int, embeddings: list):
             )
         ],
     )
+
+
+def search_chunks(query_embeddings: any, limit: int = 10):
+    return client.search(
+        collection_name=COLLECTION_NAME, query_vector=query_embeddings, limit=limit
+    )

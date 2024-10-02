@@ -7,3 +7,4 @@ htmlcov
 .cache
 .v_env
 .env
+uploaded_files/

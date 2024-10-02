@@ -13,3 +13,5 @@ llama_index
 transformers
 qdrant-client
 sentence_transformers
+langchain
+langchain_google_genai

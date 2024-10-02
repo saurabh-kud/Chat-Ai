@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     DATABASE_USERNAME: Optional[str] = None
     POSTGRES_DB: Optional[str] = None
     POSTGRES_PASSWORD: Optional[str] = None
+    GOOGLE_API_KEY: Optional[str] = None
 
     class Config:
         env_file = "../.env"
