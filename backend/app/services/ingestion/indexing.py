@@ -2,13 +2,11 @@ import uuid
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import Distance, VectorParams
+from app.config import QDRANT_HOST
+from app.config import QDRANT_PORT
 
 
-qdrant_host = "localhost"
-qdrant_port = 6333
-
-
-client = QdrantClient(host=qdrant_host, port=qdrant_port)
+client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 COLLECTION_NAME = "chat-ai"
 VECTOR_SIZE = 384
 

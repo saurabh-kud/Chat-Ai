@@ -14,7 +14,11 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import Session
 
 
-from app.utils.config import configs
+from app.config import POSTGRES_DB
+from app.config import POSTGRES_HOST
+from app.config import POSTGRES_PASSWORD
+from app.config import POSTGRES_PORT
+from app.config import POSTGRES_USER
 
 
 SYNC_DB_API = "psycopg2"
@@ -41,11 +45,11 @@ def get_db_current_time(db_session: Session) -> datetime:
 def build_connection_string(
     *,
     db_api: str = ASYNC_DB_API,
-    user: str = configs.DATABASE_USERNAME,
-    password: str = configs.POSTGRES_PASSWORD,
-    host: str = configs.DATABASE_HOSTNAME,
-    port: str = configs.DATABASE_PORT,
-    db: str = configs.POSTGRES_DB,
+    user: str = POSTGRES_USER,
+    password: str = POSTGRES_PASSWORD,
+    host: str = POSTGRES_HOST,
+    port: str = POSTGRES_PORT,
+    db: str = POSTGRES_DB,
 ) -> str:
     return f"postgresql+{db_api}://{user}:{password}@{host}:{port}/{db}"
 

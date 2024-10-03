@@ -1,20 +1,20 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage
-from app.utils.config import configs
 from fastapi import HTTPException
 from langchain_openai import OpenAI
 from langchain_openai import ChatOpenAI
+from app.config import GOOGLE_API_KEY
+from app.config import OPENAI_API_KEY
 
 # Initialize the models
-print(configs.OPENAI_API_KEY)
 llms = {
     "gemini": ChatGoogleGenerativeAI(
-        google_api_key=configs.GOOGLE_API_KEY,
+        google_api_key=GOOGLE_API_KEY,
         model="gemini-1.5-pro",
         temperature=0,
     ),
     "chatgpt": ChatOpenAI(
-        api_key=configs.OPENAI_API_KEY,
+        api_key=OPENAI_API_KEY,
         model="gpt-4o",
         temperature=0,
     ),

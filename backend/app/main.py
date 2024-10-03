@@ -6,7 +6,11 @@ import uvicorn
 
 
 startTime = time.time()
-from app.utils.config import configs
+from app.config import APP_NAME
+from app.config import APP_HOST
+from app.config import PYTHON_ENV
+from app.config import APP_VERSION
+from app.config import DOCS_ENABLED
 from app.utils import custom_handler
 from app.utils.uptime import getUptime
 
@@ -14,12 +18,11 @@ from app.api.main import api_router
 
 
 app = FastAPI(
-    title=configs.APP_NAME,
-    version=configs.APP_VERSION,
+    title=APP_NAME,
+    version=APP_VERSION,
     description="advanced chatbot for your files",
-    docs_url="/api/docs" if configs.DOCS_ENABLED else None,
+    docs_url="/api/docs" if DOCS_ENABLED else None,
 )
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,12 +44,12 @@ async def health_route(req: Request):
     """
     return JSONResponse(
         {
-            "app": configs.APP_NAME,
-            "version": "v" + configs.APP_VERSION,
+            "app": APP_NAME,
+            "version": "v" + APP_VERSION,
             "ip": req.client.host,
             "uptime": getUptime(startTime),
             # "database": "connected" if is_db_connected() else "disconnected",
-            "mode": configs.PYTHON_ENV,
+            "mode": PYTHON_ENV,
         }
     )
 

@@ -12,6 +12,7 @@ from app.services.ingestion.chunking import csv_chunking
 from app.services.ingestion.embedding import CustomCacheEmbedding
 from app.services.ingestion.indexing import insert_vectors
 from app.services.ingestion.indexing import ensure_collection_exists
+import traceback
 
 _VALID_FILE_EXTENSIONS = [
     ".txt",
@@ -35,7 +36,9 @@ base_path = Path.cwd() / "uploaded_files"  # Main directory with "uploaded_files
 def file_processing(file: UploadFile) -> str:
 
     try:
+        print("file ingestion started....")
         extention = get_file_ext(file.filename)
+        print(f"extention: {extention}")
 
         if extention not in _VALID_FILE_EXTENSIONS:
             raise HTTPException(
@@ -67,8 +70,10 @@ def file_processing(file: UploadFile) -> str:
             chunks = csv_chunking(content=content)
 
         metadata = create_metadata(document_title=file.filename, source_type=extention)
+        print("content extracted....")
 
         model = CustomCacheEmbedding()
+
         ensure_collection_exists()
 
         for index, chunks_str in enumerate(chunks):
@@ -82,4 +87,8 @@ def file_processing(file: UploadFile) -> str:
 
         return file_path
     except Exception as e:
-        HTTPException(status_code=500, detail=f"Error while indexing the file {str(e)}")
+        traceback.print_exc()
+        print(str(e))
+        raise HTTPException(
+            status_code=500, detail=f"Error while indexing the file {str(e)}"
+        )

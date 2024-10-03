@@ -1,0 +1,58 @@
+version: "3"
+services:
+  api_server:
+    container_name: chat_ai_server
+    build: ./backend
+    # dockerfile: Dockerfile
+    command: >
+      /bin/sh -c "alembic upgrade head &&
+      echo \"Starting Chat ai Server\" &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      - relational_db
+      - index
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=relational_db
+      - QDRANT_HOST=index
+    volumes:
+      - local_dynamic_storage:/home/storage
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+  relational_db:
+    image: postgres:15.2-alpine
+    restart: always
+    # POSTGRES_USER and POSTGRES_PASSWORD should be set in .env file
+    env_file:
+      - .env
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+  # This container name cannot have an underscore in it due to Vespa expectations of the URL
+  index:
+    image: qdrant/qdrant
+    restart: always
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_volume:/opt/qdrant/var
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+volumes:
+  local_dynamic_storage:
+  db_volume:
+  qdrant_volume:
