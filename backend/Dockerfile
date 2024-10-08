@@ -1,4 +1,5 @@
-FROM python:slim-bookworm
+# FROM python:slim-bookworm
+FROM python:3.11-slim
 
 
 # Install PostgreSQL development libraries

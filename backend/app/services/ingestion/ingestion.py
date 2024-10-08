@@ -30,7 +30,7 @@ def get_file_ext(file_path_or_name: str | Path) -> str:
 
 
 # Define the base path
-base_path = Path.cwd() / "uploaded_files"  # Main directory with "uploaded_files"
+base_path = "/home/storage"  # Main directory with "uploaded_files"
 
 
 def file_processing(file: UploadFile) -> str:
